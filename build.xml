@@ -1,0 +1,33 @@
+<project basedir="." default="run" name="CallRecordsSummary">
+	<property file="${basedir}/res/build.properties"></property>
+		<target name="clean">
+			<delete dir="${out.dir}">
+		    </delete>
+		</target>
+
+		<target name="init" description="Target for initialization">
+			<mkdir dir="${out.dir}"/>
+			<mkdir dir="${classes.dir}"/>
+		</target>
+
+		<target name="compile" depends="clean,init">
+			<javac destdir="${classes.dir}" source="1.5" target="1.5" includeantruntime="true" srcdir="${java.src.dir}">
+
+		</javac>
+		</target>
+
+		<target name="createjar" depends="compile">
+			<mkdir dir="${jar.dir}"/>
+				<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="main-class" value="${main.class}"/>
+			</manifest>
+				</jar>
+			</target>
+
+		<target name="run" depends="createjar">
+			<java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+		</java>
+		</target>
+
+</project>
